@@ -1,7 +1,7 @@
-const { Course, Student } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
-  // Get all courses
+  // Get all thoughts
   async getCourses(req, res) {
     try {
       const courses = await Course.find();
