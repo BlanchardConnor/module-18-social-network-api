@@ -71,7 +71,7 @@ const thoughtController = {
   },
 
   // Delete a thought
-  async deleteThought(req, res) {
+  async deleteThought({ params }, res) {
     Thought.findOneAndDelete({ _id: params.id })
       .then((dbThoughtData) => {
         if (!dbThoughtData) {

@@ -83,25 +83,20 @@ const userController = {
   },
 
   // Add a friend
-  async addFriend(req, res) {
-    try {
-      const user = await User.findOneAndUpdate(
-        { _id: req.params.userId },
-        { $addToSet: { friends: params.friendId } },
-        { runValidators: true, new: true }
-      )
-        .then((dbUserData) => {
-          if (!dbUserData) {
-            res.status(404)
-              .json({ message: 'No user found with this id!' });
-          }
+  addFriend({ params }, res) {
+    User.findOneAndUpdate(
+      { _id: params.userId },
+      { $addToSet: { friends: params.friendId } },
+      { new: true, runValidators: true }
+    )
+      .then((dbUserData) => {
+        if (!dbUserData) {
+          res.status(404).json({ message: "No user with this id" });
           return;
-        })
-      res.json(dbUserData);
-    }
-    catch (err) {
-      res.status(500).json(err);
-    }
+        }
+        res.json(dbUserData);
+      })
+      .catch((err) => res.json(err));
   },
 
   // Remove a friend
